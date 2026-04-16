@@ -3,33 +3,46 @@ import torch
 import re
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 
-# -----------------------------
+
 # Page Config
-# -----------------------------
+
 st.set_page_config(
     page_title="Dialogue Summarization",
     page_icon="📄",
     layout="centered"
 )
 
-# -----------------------------
+
 # Text Cleaning Function
-# -----------------------------
+
 def clean_text(text):
     text = text.lower()
     text = re.sub(r'\[.*?\]', '', text)
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
-# -----------------------------
+
 # Load Model + Tokenizer
-# -----------------------------
+
+import os
+
 @st.cache_resource
 def load_model():
-    model_path = "./saved_summary_model"   # YOUR MODEL FOLDER
+    model_path = "./saved_summary_model"   
 
-    tokenizer = T5Tokenizer.from_pretrained(model_path)
-    model = T5ForConditionalGeneration.from_pretrained(model_path)
+    
+    has_weights = os.path.exists(os.path.join(model_path, "model.safetensors")) or \
+                  os.path.exists(os.path.join(model_path, "pytorch_model.bin"))
+
+    if has_weights:
+        
+        tokenizer = T5Tokenizer.from_pretrained(model_path)
+        model = T5ForConditionalGeneration.from_pretrained(model_path)
+    else:
+       
+        st.warning("⚠️ Local model weights not found. Falling back to the base 't5-small' model. Downloading from Hugging Face (this might take a moment)...")
+        tokenizer = T5Tokenizer.from_pretrained("t5-small")
+        model = T5ForConditionalGeneration.from_pretrained("t5-small")
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
@@ -39,9 +52,9 @@ def load_model():
 
 model, tokenizer, device = load_model()
 
-# -----------------------------
+
 # Summarization Function
-# -----------------------------
+
 def summarize_dialogue(dialogue):
     dialogue = clean_text(dialogue)
 
@@ -66,10 +79,10 @@ def summarize_dialogue(dialogue):
     summary = tokenizer.decode(outputs[0], skip_special_tokens=True)
     return summary
 
-# -----------------------------
+
 # Streamlit UI
-# -----------------------------
-st.title("📄 Dialogue Summarization using Fine-Tuned T5")
+
+st.title("Dialogue Summarization using Fine-Tuned T5")
 st.write("Enter a conversation below and generate a concise summary.")
 
 dialogue_input = st.text_area(
@@ -99,8 +112,8 @@ if generate_btn:
         st.subheader("Summary")
         st.success(summary)
 
-# -----------------------------
+
 # Footer
-# -----------------------------
+
 st.markdown("---")
 st.caption("Built with 🤖 T5 Transformer + Streamlit")
