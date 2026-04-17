@@ -9,7 +9,7 @@ A full-stack web application that converts long paragraphs and dialogues into co
 ### 1. Landing Dashboard (Empty State)
 
 <p align="center">
-  <img src="images/landing_dark.png" width="800">
+  <img src="frontend/src/images/landing_dark.png" width="800">
 </p>
 
 This is the default landing view of **ChatInsight – AI Text Summarizer**.
@@ -27,7 +27,7 @@ The interface is clean and minimal, designed for fast interaction.
 ### 2. Light Mode UI
 
 <p align="center">
-  <img src="images/landing_light.png" width="800">
+  <img src="frontend/src/images/landing_light.png" width="800">
 </p>
 
 ChatInsight supports **light mode** for better accessibility.
@@ -42,7 +42,7 @@ Highlights:
 ### 3. Text Input with Example Content
 
 <p align="center">
-  <img src="images/input_filled.png" width="800">
+  <img src="frontend/src/images/input_filled.png" width="800">
 </p>
 
 Users can paste long paragraphs or conversations.
@@ -57,7 +57,7 @@ Capabilities:
 ### 4. Generated Summary Output
 
 <p align="center">
-  <img src="images/summary_output.png" width="800">
+  <img src="frontend/src/images/summary_output.png" width="800">
 </p>
 
 After clicking **Summarize**, the system generates a concise summary.
@@ -72,7 +72,7 @@ Key features:
 ### 5. Summary Length Control
 
 <p align="center">
-  <img src="images/length_control.png" width="800">
+  <img src="frontend/src/images/length_control.png" width="800">
 </p>
 
 Users can control how detailed the summary should be.
@@ -87,7 +87,7 @@ Options:
 ### 6. Performance Metrics Panel
 
 <p align="center">
-  <img src="images/metrics.png" width="800">
+  <img src="frontend/src/images/metrics.png" width="800">
 </p>
 
 The dashboard shows key statistics:
@@ -103,7 +103,7 @@ This helps users understand compression efficiency.
 ### 7. History Sidebar
 
 <p align="center">
-  <img src="images/history.png" width="800">
+  <img src="frontend/src/images/history.png" width="800">
 </p>
 
 ChatInsight maintains a history of summaries.
@@ -118,7 +118,7 @@ Features:
 ### 8. About Section
 
 <p align="center">
-  <img src="images/about_popup.png" width="800">
+  <img src="frontend/src/images/about_popup.png" width="800">
 </p>
 
 Provides system information:
@@ -133,7 +133,7 @@ Provides system information:
 ### 9. AI Model Details
 
 <p align="center">
-  <img src="images/model_specs.png" width="800">
+  <img src="frontend/src/images/model_specs.png" width="800">
 </p>
 
 Displays information about the underlying model:
@@ -148,7 +148,7 @@ Displays information about the underlying model:
 ### 10. Repository Information
 
 <p align="center">
-  <img src="images/repo_info.png" width="800">
+  <img src="frontend/src/images/repo_info.png" width="800">
 </p>
 
 Quick access to project metadata:
@@ -163,7 +163,7 @@ Quick access to project metadata:
 ### 11. Server Status Monitoring
 
 <p align="center">
-  <img src="images/server_status.png" width="800">
+  <img src="frontend/src/images/server_status.png" width="800">
 </p>
 
 Real-time backend monitoring panel:
@@ -179,7 +179,7 @@ Ensures transparency in system performance.
 ### 12. Contact Developer
 
 <p align="center">
-  <img src="images/contact_lk.png" width="800">
+  <img src="frontend/src/images/contact_lk.png" width="800">
 </p>
 
 Users can reset the interface using the **Clear** button.
