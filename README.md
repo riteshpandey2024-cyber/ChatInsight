@@ -305,31 +305,34 @@ You need **two terminals** running simultaneously:
 
 ```
 ChatInsight/
-├── server.py                  # FastAPI backend (API endpoints)
-├── app.py                     # Original Streamlit app (legacy)
-├── summary.py                 # Model training script (Colab)
-├── requirements.txt           # Python dependencies
+├── README.md                  # Project documentation
+├── app.py                     # Streamlit app (Dialogue Summarization)
 ├── config.json                # T5 model configuration
 ├── generation_config.json     # Generation parameters
+├── requirements.txt           # Python dependencies
+├── summary.py                 # Model training script
 ├── saved_summary_model/       # Saved model + tokenizer files
-│   ├── config.json
-│   ├── tokenizer.json
-│   └── tokenizer_config.json
 ├── frontend/                  # React frontend (Vite)
+│   ├── eslint.config.js
 │   ├── index.html
+│   ├── package-lock.json
 │   ├── package.json
+│   ├── vite.config.js
+│   ├── public/
 │   └── src/
-│       ├── main.jsx           # Entry point
 │       ├── App.jsx            # Main app component
 │       ├── api.js             # API client (fetch wrapper)
 │       ├── index.css          # Design system (all styles)
-│       └── components/
-│           ├── Navbar.jsx     # Top navigation bar
+│       ├── main.jsx           # Entry point
+│       ├── assets/            # Static assets
+│       ├── images/            # UI images
+│       └── components/        # React components
+│           ├── Footer.jsx     # Bottom footer
 │           ├── Header.jsx     # Title + subtitle
-│           ├── TextInput.jsx  # Text input area
-│           ├── SummaryOutput.jsx  # Summary result + stats
 │           ├── History.jsx    # Sidebar with past summaries
-│           └── Footer.jsx     # Bottom footer
+│           ├── Navbar.jsx     # Top navigation bar
+│           ├── SummaryOutput.jsx  # Summary result + stats
+│           └── TextInput.jsx  # Text input area
 └── .gitignore
 ```
 
