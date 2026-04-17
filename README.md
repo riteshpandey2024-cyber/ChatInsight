@@ -393,7 +393,7 @@ curl -X POST http://localhost:8000/api/summarize \
 
 ---
 
-## Developer
+## Contact Developer
 
 **Ritesh Pandey**
 
