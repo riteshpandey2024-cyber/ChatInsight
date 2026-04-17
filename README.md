@@ -4,7 +4,7 @@ A full-stack web application that converts long paragraphs and dialogues into co
 
 **Live Deployment:** [Link to Live App](your_deployment_url_here)
 
-> **Note:** If you experience any issues accessing or using the live application, please refer to the **Getting Started** and **Troubleshooting** sections below to run the project locally.
+> **Note:** If you experience any issues accessing or using the live application, please refer to the **Demonstration** and **Troubleshooting** sections below to run the project locally.
 
 ## Demonstration
 
