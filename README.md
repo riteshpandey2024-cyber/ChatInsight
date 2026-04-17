@@ -2,7 +2,7 @@
 
 A full-stack web application that converts long paragraphs and dialogues into concise summaries using a fine-tuned **T5 Transformer** model.
 
-🚀 **Live Deployment:** [Link to Live App](your_deployment_url_here) *(Update this placeholder with your actual link)*
+**Live Deployment:** [Link to Live App](your_deployment_url_here) *(Update this placeholder with your actual link)*
 
 ## Demonstration
 
