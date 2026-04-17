@@ -2,6 +2,199 @@
 
 A full-stack web application that converts long paragraphs and dialogues into concise summaries using a fine-tuned **T5 Transformer** model.
 
+## Demonstration
+
+---
+
+### 1. Landing Dashboard (Empty State)
+
+<p align="center">
+  <img src="images/landing_dark.png" width="800">
+</p>
+
+This is the default landing view of **ChatInsight – AI Text Summarizer**.
+
+Features visible:
+- Input text panel (left)
+- Output summary panel (right)
+- Summary length slider
+- Action buttons (Clear, Summarize)
+
+The interface is clean and minimal, designed for fast interaction.
+
+---
+
+### 2. Light Mode UI
+
+<p align="center">
+  <img src="images/landing_light.png" width="800">
+</p>
+
+ChatInsight supports **light mode** for better accessibility.
+
+Highlights:
+- Soft background with high readability
+- Same layout consistency as dark mode
+- Ideal for daytime usage
+
+---
+
+### 3. Text Input with Example Content
+
+<p align="center">
+  <img src="images/input_filled.png" width="800">
+</p>
+
+Users can paste long paragraphs or conversations.
+
+Capabilities:
+- Handles large input text (word + character count shown)
+- Supports paragraph-based and dialogue-based input
+- Real-time input tracking
+
+---
+
+### 4. Generated Summary Output
+
+<p align="center">
+  <img src="images/summary_output.png" width="800">
+</p>
+
+After clicking **Summarize**, the system generates a concise summary.
+
+Key features:
+- AI-powered summarization using **T5 Transformer**
+- Clean, readable output format
+- Clipboard copy option for quick usage
+
+---
+
+### 5. Summary Length Control
+
+<p align="center">
+  <img src="images/length_control.png" width="800">
+</p>
+
+Users can control how detailed the summary should be.
+
+Options:
+- Short summary (high compression)
+- Medium summary (balanced)
+- Long summary (more context retained)
+
+---
+
+### 6. Performance Metrics Panel
+
+<p align="center">
+  <img src="images/metrics.png" width="800">
+</p>
+
+The dashboard shows key statistics:
+
+- **Original Words**
+- **Summary Words**
+- **Reduction %**
+
+This helps users understand compression efficiency.
+
+---
+
+### 7. History Sidebar
+
+<p align="center">
+  <img src="images/history.png" width="800">
+</p>
+
+ChatInsight maintains a history of summaries.
+
+Features:
+- Previous summaries stored with timestamps
+- Reduction percentage displayed
+- Quick access for reuse
+
+---
+
+### 8. About Section
+
+<p align="center">
+  <img src="images/about_popup.png" width="800">
+</p>
+
+Provides system information:
+
+- Project description
+- Version details
+- Tech stack (React, FastAPI, Streamlit)
+- Core functionality (Dialogue Extraction)
+
+---
+
+### 9. AI Model Details
+
+<p align="center">
+  <img src="images/model_specs.png" width="800">
+</p>
+
+Displays information about the underlying model:
+
+- Architecture: **T5-Small**
+- Task: Text Summarization
+- Parameters: ~60M
+- Link to HuggingFace model
+
+---
+
+### 10. Repository Information
+
+<p align="center">
+  <img src="images/repo_info.png" width="800">
+</p>
+
+Quick access to project metadata:
+
+- Author details
+- Frontend framework (React + Vite)
+- License (MIT)
+- GitHub source link
+
+---
+
+### 11. Server Status Monitoring
+
+<p align="center">
+  <img src="images/server_status.png" width="800">
+</p>
+
+Real-time backend monitoring panel:
+
+- Backend: FastAPI (Python 3.10)
+- AI Model: T5 Transformer
+- Latency tracking (ms-level)
+
+Ensures transparency in system performance.
+
+---
+
+### 12. Contact Developer
+
+<p align="center">
+  <img src="images/contact_lk.png" width="800">
+</p>
+
+Users can reset the interface using the **Clear** button.
+
+Effects:
+- Input text cleared
+- Summary removed
+- Metrics reset
+
+---
+
+## Final Overview
+
+*ChatInsight is a fast, user-friendly AI-powered summarization tool that leverages a fine-tuned T5 Transformer model to generate concise summaries. It provides adjustable summary length, performance metrics, history tracking, and real-time system monitoring — all within a modern and responsive UI.*
+
 ## Tech Stack
 
 | Layer     | Technology                          |
