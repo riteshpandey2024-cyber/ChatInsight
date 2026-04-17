@@ -397,7 +397,7 @@ curl -X POST http://localhost:8000/api/summarize \
 
 **Ritesh Pandey**
 
-- Email: [Contact](pandeyriteshp2003@gmail.com)
+- Email: [pandeyriteshp2003@gmail.com](pandeyriteshp2003@gmail.com)
 - LinkedIn: [Ritesh Pandey](https://www.linkedin.com/in/ritesh-pandey2024/)
   
 ---
