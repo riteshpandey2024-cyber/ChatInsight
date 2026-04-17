@@ -398,7 +398,7 @@ curl -X POST http://localhost:8000/api/summarize \
 **Ritesh Pandey**
 
 - GitHub: [riteshpandey2024-cyber](https://github.com/riteshpandey2024-cyber)
-- LinkedIn: [riteshpandey2024-cyber](https://www.linkedin.com/in/ritesh-pandey2024/)
+- LinkedIn: [riteshpandey](https://www.linkedin.com/in/ritesh-pandey2024/)
   
 ---
 
