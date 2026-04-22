@@ -128,7 +128,8 @@ def summarize(payload: SummarizeRequest) -> SummarizeResponse:
 
         summary = ""
         try:
-            with httpx.Client(timeout=120.0) as client:
+            hf_timeout = float(os.getenv("HF_TIMEOUT_SECONDS", "45"))
+            with httpx.Client(timeout=hf_timeout) as client:
                 response = client.post(api_url, headers=headers, json=payload_data)
 
             if response.status_code < 400:
