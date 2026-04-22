@@ -159,7 +159,6 @@ Quick access to project metadata:
 
 - Author details
 - Frontend framework (React + Vite)
-- License (MIT)
 - GitHub source link
 
 ---
