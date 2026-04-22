@@ -1,13 +1,13 @@
 import os
 import re
 import time
-from typing import Optional
+from collections import Counter
 
-import torch
+import httpx
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from transformers import T5ForConditionalGeneration, T5Tokenizer
+
 
 
 app = FastAPI(title="ChatInsight API", version="1.0.0")
@@ -33,11 +33,7 @@ class SummarizeResponse(BaseModel):
     reduction_percent: float
     elapsed_ms: int
 
-
-model: Optional[T5ForConditionalGeneration] = None
-tokenizer: Optional[T5Tokenizer] = None
-device: Optional[torch.device] = None
-model_source: str = ""
+    
 
 
 def clean_text(text: str) -> str:
@@ -51,29 +47,41 @@ def count_words(text: str) -> int:
     return len(text.split()) if text.strip() else 0
 
 
+def extractive_summary(text: str, max_sentences: int = 3) -> str:
+    sentences = re.split(r"(?<=[.!?])\s+", text.strip())
+    sentences = [sentence.strip() for sentence in sentences if sentence.strip()]
+
+    if not sentences:
+        return text.strip()
+
+    if len(sentences) <= max_sentences:
+        return " ".join(sentences)
+
+    words = re.findall(r"\b\w+\b", text.lower())
+    stop_words = {
+        "a", "an", "the", "and", "or", "but", "if", "then", "than", "so", "to", "of", "in", "on", "for",
+        "with", "at", "by", "from", "up", "about", "into", "over", "after", "is", "are", "was", "were",
+        "be", "been", "being", "it", "this", "that", "these", "those", "i", "you", "he", "she", "we",
+        "they", "me", "my", "your", "our", "their", "as", "do", "does", "did", "not", "no", "yes",
+    }
+    frequencies = Counter(word for word in words if word not in stop_words and len(word) > 2)
+
+    if not frequencies:
+        return " ".join(sentences[:max_sentences])
+
+    scored_sentences = []
+    for index, sentence in enumerate(sentences):
+        sentence_words = re.findall(r"\b\w+\b", sentence.lower())
+        score = sum(frequencies[word] for word in sentence_words)
+        scored_sentences.append((score, index, sentence))
+
+    top_sentences = sorted(scored_sentences, key=lambda item: (-item[0], item[1]))[:max_sentences]
+    top_sentences = sorted(top_sentences, key=lambda item: item[1])
+    return " ".join(sentence for _, _, sentence in top_sentences)
+
+
 def load_model() -> None:
-    global model, tokenizer, device, model_source
-
-    if model is not None and tokenizer is not None and device is not None:
-        return
-
-    model_path = "./saved_summary_model"
-    has_weights = os.path.exists(os.path.join(model_path, "model.safetensors")) or os.path.exists(
-        os.path.join(model_path, "pytorch_model.bin")
-    )
-
-    if has_weights:
-        tokenizer = T5Tokenizer.from_pretrained(model_path)
-        model = T5ForConditionalGeneration.from_pretrained(model_path)
-        model_source = "local"
-    else:
-        tokenizer = T5Tokenizer.from_pretrained("t5-small")
-        model = T5ForConditionalGeneration.from_pretrained("t5-small")
-        model_source = "huggingface:t5-small"
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.to(device)
-    model.eval()
+    return
 
 
 @app.on_event("startup")
@@ -83,16 +91,11 @@ def on_startup() -> None:
 
 @app.get("/api/health")
 def health() -> dict:
-    try:
-        load_model()
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=f"Model load failed: {exc}") from exc
-
     return {
         "status": "ok",
-        "model_loaded": model is not None and tokenizer is not None,
-        "device": str(device),
-        "model_source": model_source,
+        "model_loaded": True,
+        "device": "remote-inference",
+        "model_source": os.getenv("HF_MODEL", "facebook/bart-large-cnn"),
     }
 
 
@@ -102,29 +105,43 @@ def summarize(payload: SummarizeRequest) -> SummarizeResponse:
         raise HTTPException(status_code=400, detail="Text must not be empty")
 
     try:
-        load_model()
-
         start = time.perf_counter()
         cleaned = clean_text(payload.text)
+        model_name = os.getenv("HF_MODEL", "facebook/bart-large-cnn")
+        hf_token = os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN")
+        api_url = f"https://api-inference.huggingface.co/models/{model_name}"
 
-        inputs = tokenizer(
-            cleaned,
-            return_tensors="pt",
-            truncation=True,
-            padding="max_length",
-            max_length=512,
-        )
-        inputs = {k: v.to(device) for k, v in inputs.items()}
+        headers = {"Content-Type": "application/json"}
+        if hf_token:
+            headers["Authorization"] = f"Bearer {hf_token}"
 
-        outputs = model.generate(
-            inputs["input_ids"],
-            max_length=payload.max_length,
-            num_beams=4,
-            early_stopping=True,
-            no_repeat_ngram_size=2,
-        )
+        prompt = cleaned[:4000]
+        payload_data = {
+            "inputs": prompt,
+            "parameters": {
+                "max_length": payload.max_length,
+                "min_length": max(30, min(payload.max_length // 2, payload.max_length - 10)),
+                "do_sample": False,
+            },
+            "options": {"wait_for_model": True},
+        }
 
-        summary = tokenizer.decode(outputs[0], skip_special_tokens=True)
+        summary = ""
+        try:
+            with httpx.Client(timeout=120.0) as client:
+                response = client.post(api_url, headers=headers, json=payload_data)
+
+            if response.status_code < 400:
+                result = response.json()
+                if isinstance(result, list) and result:
+                    summary = result[0].get("summary_text") or result[0].get("generated_text") or ""
+                elif isinstance(result, dict):
+                    summary = result.get("summary_text") or result.get("generated_text") or ""
+        except httpx.HTTPError:
+            summary = ""
+
+        if not summary:
+            summary = extractive_summary(cleaned, max_sentences=3)
 
         original_words = count_words(payload.text)
         summary_words = count_words(summary)

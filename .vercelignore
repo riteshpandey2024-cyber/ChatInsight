@@ -1,0 +1,6 @@
+.venv/
+frontend/node_modules/
+saved_summary_model/
+summary.py
+app.py
+.DS_Store

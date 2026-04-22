@@ -60,7 +60,7 @@ export default function Navbar() {
           <div className="api-details-popover" style={{ left: '0', right: 'auto', width: '280px', top: 'calc(100% + 12px)' }}>
             <div className="api-details__header">About ChatInsight</div>
             <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '12px' }}>
-              An advanced, fast AI conversation summarization tool powered by a fine-tuned HuggingFace T5 transformer.
+              An advanced, fast AI conversation summarization tool powered by remote Hugging Face inference with a local fallback.
             </p>
             <div className="api-details__row">
               <span className="api-details__label">Version</span>
@@ -94,7 +94,7 @@ export default function Navbar() {
               <div className="api-details__header">AI Model Specs</div>
               <div className="api-details__row">
                 <span className="api-details__label">Architecture</span>
-                <span className="api-details__value">T5-Small</span>
+                <span className="api-details__value">Remote Inference</span>
               </div>
               <div className="api-details__row">
                 <span className="api-details__label">Task</span>
@@ -102,7 +102,7 @@ export default function Navbar() {
               </div>
               <div className="api-details__row">
                 <span className="api-details__label">Parameters</span>
-                <span className="api-details__value">~60M</span>
+                <span className="api-details__value">Model-dependent</span>
               </div>
               <div className="api-details__row" style={{ marginTop: '12px' }}>
                 <a 
@@ -191,11 +191,11 @@ export default function Navbar() {
               <div className="api-details__header">Server Status</div>
               <div className="api-details__row">
                 <span className="api-details__label">Backend</span>
-                <span className="api-details__value">FastAPI / Python 3.10</span>
+                <span className="api-details__value">FastAPI / Python</span>
               </div>
               <div className="api-details__row">
                 <span className="api-details__label">AI Model</span>
-                <span className="api-details__value">T5 Transformer</span>
+                <span className="api-details__value">Remote Hugging Face + fallback</span>
               </div>
               <div className="api-details__row">
                 <span className="api-details__label">Latency</span>
