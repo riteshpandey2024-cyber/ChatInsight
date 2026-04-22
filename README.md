@@ -216,8 +216,8 @@ Make sure you have the following installed on your machine:
 
 - **Python 3.8+** — [Download](https://www.python.org/downloads/)
 - **Node.js 18+** — [Download](https://nodejs.org/)
-- **npm** (comes with Node.js)
-- **Git** (optional, for cloning)
+- **npm** [comes with Node.js]
+- **Git** [optional, for cloning]
 
 To verify, run:
 
